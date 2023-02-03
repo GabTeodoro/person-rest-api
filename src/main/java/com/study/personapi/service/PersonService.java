@@ -6,29 +6,27 @@ import com.study.personapi.entity.Person;
 import com.study.personapi.exception.PersonNotFoundException;
 import com.study.personapi.mapper.PersonMapper;
 import com.study.personapi.repository.PersonRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
     private final PersonRepository repository;
     private final PersonMapper mapper;
 
-    @Autowired
-    public PersonService(PersonRepository repository, PersonMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
-
     public MessageResponseDTO createPerson(PersonDTO personDTO) {
         Person person = mapper.toModel(personDTO);
         Person savedPerson = repository.save(person);
-        return createMessageResponse("Created person with ID ", savedPerson.getId());
+        MessageResponseDTO messageResponse =
+                createMessageResponse("Created person with ID ", savedPerson.getId());
+
+        return messageResponse;
     }
 
     public List<PersonDTO> listAll() {
