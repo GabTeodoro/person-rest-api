@@ -30,6 +30,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     private PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return service.findByid(id);
     }
@@ -41,6 +42,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     private MessageResponseDTO updateByid(@PathVariable Long id, @RequestBody @Valid PersonDTO personDTO)
             throws PersonNotFoundException {
         return service.updateById(id, personDTO);
